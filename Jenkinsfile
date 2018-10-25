@@ -7,13 +7,13 @@ node('docker') {
     stage('Build Master Docker Image') {
         sh 'ls -al'
         sh 'env'
-        docker.build("modern-jenkins/jenkins-master:${env.BUILD_NUMBER}", "-f Dockerfile build/master")
+        docker.build("modern-jenkins/jenkins-master:${env.BUILD_NUMBER}", "build/master")
         
         // eventually a push to dockerhub could be done here
     }
 
     stage('Build Slave Docker Image') {
-        docker.build("modern-jenkins/jenkins-slave:${env.BUILD_NUMBER}", "-f Dockerfile build/slave")
+        docker.build("modern-jenkins/jenkins-slave:${env.BUILD_NUMBER}", "build/slave")
 
         // eventually a push to dockerhub could be done here
     }
