@@ -27,9 +27,9 @@ services:
       context: build/slave
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-     - ./data/jenkins-agent:/home/jenkins/agent
+     - ./data/jenkins-agent:/home/jenkins/ci-agent
     depends_on:
      - jenkins-master
     command:
-      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://jenkins-master:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/agent"
+      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://jenkins-master:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/ci-agent"
     restart: unless-stopped
