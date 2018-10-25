@@ -18,7 +18,7 @@ services:
       - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
       - JENKINS_MASTER_EXECUTORS=0
       - JENKINS_AGENT_EXECUTORS=2
-      - JENKINS_FRONTEND_URL=http://localhost:8080.
+      - JENKINS_FRONTEND_URL=http://localhost:8080
     restart: always
 
 
@@ -31,5 +31,5 @@ services:
     depends_on:
      - jenkins-master
     command:
-      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://jenkins-master:8080/computer/docker-slave/slave-agent.jnlp -secret $SLAVE_SECRET -workDir "/home/jenkins/agent"
+      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://jenkins-master:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/agent"
     restart: unless-stopped
