@@ -73,4 +73,3 @@ resource-disposer
 build-timeout
 mapdb-api
 simple-theme-plugin
-ws-cleanup
