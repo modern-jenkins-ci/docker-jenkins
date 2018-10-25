@@ -1,6 +1,6 @@
 node('docker') {
     stage('Get Latest Code') {
-        cleanWs
+        cleanWs()
         checkout scm
     }
 
