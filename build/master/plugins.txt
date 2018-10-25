@@ -72,3 +72,4 @@ workflow-support
 resource-disposer
 build-timeout
 mapdb-api
+simple-theme-plugin
