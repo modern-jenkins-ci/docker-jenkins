@@ -5,6 +5,8 @@ node('docker') {
     }
 
     stage('Build Master Docker Image') {
+        sh 'ls -al'
+        sh 'env'
         docker.build("modern-jenkins/jenkins-master:${env.BUILD_NUMBER}", "-f Dockerfile build/master")
         
         // eventually a push to dockerhub could be done here
