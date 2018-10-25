@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  jenkins-master:
+    build:
+      context: build/master
+      # args:
+      #   - http_proxy=http://proxy-chain.intel.com:911
+      #   - https_proxy=http://proxy-chain.intel.com:911
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./data/jenkins-master:/var/jenkins_home
+      - ./config/secrets:/var/jenkins_secrets
+    environment:
+      - LOCAL_ADMIN=admin
+      - LOCAL_PASSWORD
+      - JENKINS_SECRETS
+      - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+      - JENKINS_MASTER_EXECUTORS=0
+      - JENKINS_AGENT_EXECUTORS=2
+      - JENKINS_FRONTEND_URL=http://localhost:8080.
+    restart: always
+
+
+  jenkins-slave:
+    build:
+      context: build/slave
+      # args:
+      #   - http_proxy=http://proxy-chain.intel.com:911
+      #   - https_proxy=http://proxy-chain.intel.com:911
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - ./data/jenkins-agent:/home/jenkins/agent
+    depends_on:
+     - jenkins-master
+    command:
+      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://jenkins-master:8080/computer/docker-slave/slave-agent.jnlp -secret $SLAVE_SECRET -workDir "/home/jenkins/agent"
+    restart: unless-stopped
