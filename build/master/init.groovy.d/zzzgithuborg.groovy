@@ -24,7 +24,7 @@ if(cred) {
   
   // Create the top-level item if it doesn't exist already.
   def folder = instance.items.isEmpty()
-    ? instance.createProject(OrganizationFolder, 'Modern Jenkins')
+    ? instance.createProject(OrganizationFolder, 'Modern-Jenkins')
     : instance.items[0]
   
   // Set up GitHub source.
