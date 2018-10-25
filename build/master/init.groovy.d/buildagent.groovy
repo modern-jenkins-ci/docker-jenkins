@@ -25,8 +25,11 @@ def createSlave(instance, name, label, numExecutors) {
   println "Create " + name + " agent"
 }
 
-def numExecs =  System.getenv('JENKINS_AGENT_EXECUTORS') ?: 2
+def masterExecs = System.getenv("JENKINS_MASTER_EXECUTORS").toInteger() ?: 0
+def numExecs = System.getenv('JENKINS_AGENT_EXECUTORS').toInteger() ?: 2
 def instance = Jenkins.getInstance()
+
+instance.setNumExecutors(masterExecs)
 
 createSlave(instance, "docker-slave", "docker", numExecs)
 
