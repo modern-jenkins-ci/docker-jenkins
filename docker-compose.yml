@@ -5,13 +5,14 @@ services:
   jenkins-master:
     build:
       context: build/master
+      dockerfile: build/master/Dockerfile.secrets
     user: root #katacoda
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - ./data/jenkins-master:/var/jenkins_home
-      - ./config/secrets:/var/jenkins_secrets
+      # - ./config/secrets:/var/jenkins_secrets
     environment:
       - LOCAL_ADMIN=admin
       - LOCAL_PASSWORD
