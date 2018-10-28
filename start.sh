@@ -1,6 +1,8 @@
 #!/bin/bash
 
-. .seed.env
+if [ -e .seed.env ];
+  . .seed.env
+fi
 
 LOCAL_SECRETS=./config/secrets
 
