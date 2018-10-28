@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import hudson.slaves.EnvironmentVariablesNodeProperty.Entry;
 
 def createSlave(instance, name, label, numExecutors) {
-  List<Entry> agentEnv = new ArrayList<Entry>();
-  EnvironmentVariablesNodeProperty envPro = new EnvironmentVariablesNodeProperty(agentEnv);
+  println "--> Creating [${name}] agent with label [${label}]"
+
+  List<Entry> agentEnv = new ArrayList<Entry>()
+  EnvironmentVariablesNodeProperty envPro = new EnvironmentVariablesNodeProperty(agentEnv)
   Slave slave = new DumbSlave(
           name, "CI Docker Agent",
           "ci-agent",
@@ -22,7 +24,7 @@ def createSlave(instance, name, label, numExecutors) {
   slave.getNodeProperties().add(envPro)
   instance.addNode(slave)
 
-  println "Create " + name + " agent"
+  println "Created ${name} agent"
 }
 
 def masterExecs = System.getenv("JENKINS_MASTER_EXECUTORS").toInteger() ?: 0
