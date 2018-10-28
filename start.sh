@@ -6,6 +6,10 @@ fi
 
 LOCAL_SECRETS=./config/secrets
 
+if [ ! -d $LOCAL_SECRETS ]; then
+  mkdir -p $LOCAL_SECRETS
+fi
+
 wget $SECRETS_SEED_URL \
   -O $LOCAL_SECRETS/github
 
