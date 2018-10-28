@@ -19,5 +19,7 @@ else
   exit 1
 fi
 
+mkdir -p data
+
 docker-compose up -d
 docker-compose logs -f jenkins-master
