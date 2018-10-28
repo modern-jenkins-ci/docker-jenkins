@@ -3,7 +3,8 @@ FROM jenkins/slave:alpine
 
 COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/docker
 
-USER root
+#USER root
 
-RUN apt-get update && apt-get install -y jq
+# Example of adding extra tools
+RUN apk add --update --no-cache jq
 
