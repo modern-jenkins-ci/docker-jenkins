@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts-alpine
+FROM jenkins/jenkins:lts
 
 LABEL MAINTAINER "Ernesto Ojeda <ernesto.ojeda@intel.com>"
 
