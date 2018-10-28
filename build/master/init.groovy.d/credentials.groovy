@@ -45,6 +45,8 @@ def createJenkinsTextCredential(instance, text, id, description="${id}_credentia
 def instance = Jenkins.getInstance()
 def secretsRoot = System.getenv('JENKINS_SECRETS')
 
+println "Importing secrets from: ${System.getenv('JENKINS_SECRETS')}"
+
 if(secretsRoot) {
   def list = []
 
@@ -52,6 +54,8 @@ if(secretsRoot) {
   dir.eachFileRecurse (FileType.FILES) { file ->
     list << file
   }
+
+  println "Fount the following secret file(s): ${list}"
 
   list.each { secretFile ->
     println "--> Importing secrets from ${secretFile}"
