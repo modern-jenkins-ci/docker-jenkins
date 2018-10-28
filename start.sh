@@ -10,8 +10,7 @@ if [ ! -d $LOCAL_SECRETS ]; then
   mkdir -p $LOCAL_SECRETS
 fi
 
-wget $SECRETS_SEED_URL \
-  -O $LOCAL_SECRETS/github
+curl -sSL $SECRETS_SEED_URL -o $LOCAL_SECRETS/github
 
 if [ -e $LOCAL_SECRETS/github ]; then
   echo "Local Secrets exist...starting jenkins"
