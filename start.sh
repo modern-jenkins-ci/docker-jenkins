@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -e .seed.env ];
+if [ -e .seed.env ]; then
   . .seed.env
 fi
 
