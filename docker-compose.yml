@@ -5,6 +5,7 @@ services:
   jenkins-master:
     build:
       context: build/master
+    user: root #katacoda
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -25,6 +26,7 @@ services:
   jenkins-slave:
     build:
       context: build/slave
+    user: root #katacoda
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - ./data/jenkins-agent:/home/jenkins/ci-agent
