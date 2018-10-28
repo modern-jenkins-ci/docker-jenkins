@@ -15,10 +15,10 @@ services:
       - LOCAL_ADMIN=admin
       - LOCAL_PASSWORD
       - JENKINS_SECRETS
+      - JENKINS_FRONTEND_URL
       - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
       - JENKINS_MASTER_EXECUTORS=0
       - JENKINS_AGENT_EXECUTORS=2
-      - JENKINS_FRONTEND_URL=http://localhost:8080
     restart: always
 
 
