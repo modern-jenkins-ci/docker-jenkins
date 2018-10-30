@@ -99,7 +99,7 @@ def textCreds = CredentialsProvider.lookupCredentials(StringCredentialsImpl, ins
 def hookCred = textCreds.findResult { it.id == 'swpc-11-2018-pat-text' ? it : null }
 
 if(hookCred) {
-  def webHookUrl = "${System.getenv('JENKINS_FRONTEND_URL')}/github-webook"
+  def webHookUrl = System.getenv('GIHUB_ORG_WEBHOOK_URL') ?:"${System.getenv('JENKINS_FRONTEND_URL')}/github-webook"
   configureGitHub(instance, 'GitHub', 'https://api.github.com', hookCred.id, true, webHookUrl, hookCred.id)
 } else {
   println "Could not find webhook shared secret. Could not configure GitHub"
