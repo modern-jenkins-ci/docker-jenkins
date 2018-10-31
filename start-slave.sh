@@ -22,13 +22,9 @@ if [ $LOAD_LOCAL_SECRETS == "true" ]; then
   fi
 fi
 
-if [ ! -d data/jenkins-master ]; then
-  mkdir -p data/jenkins-master
-fi
-
 if [ ! -d data/jenkins-slave ]; then
   mkdir -p data/jenkins-slave
 fi
 
-docker-compose up -d
-docker-compose logs -f jenkins-master
+docker-compose up -d jenkins-slave
+docker-compose logs -f jenkins-slave
