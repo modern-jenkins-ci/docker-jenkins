@@ -12,7 +12,7 @@ services:
       - "50000:50000"
     volumes:
       - ./data/jenkins-master:/var/jenkins_home
-      # - ./config/secrets:/var/jenkins_secrets
+     # - ./config/secrets:/var/jenkins_secrets
     environment:
       - LOCAL_ADMIN=admin
       - LOCAL_PASSWORD
@@ -32,8 +32,8 @@ services:
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - ./data/jenkins-slave:/home/jenkins/ci-agent
-    depends_on:
-     - jenkins-master
+    # depends_on: #commented out for katacoda
+    # - jenkins-master
     command:
       java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://${JENKINS_SERVER}:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/ci-agent"
     restart: unless-stopped
