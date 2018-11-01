@@ -1,5 +1,5 @@
 # Used to create a jenkins slave agent with embedded software
-FROM jenkins/slave:latest
+FROM jenkins/slave:alpine
 
 COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/docker
 
