@@ -18,6 +18,7 @@ services:
       - LOCAL_PASSWORD
       - JENKINS_SECRETS
       - JENKINS_FRONTEND_URL
+      - GIHUB_ORG_WEBHOOK_URL
       - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
       - JENKINS_MASTER_EXECUTORS=0
       - JENKINS_AGENT_EXECUTORS=2
@@ -34,5 +35,5 @@ services:
     depends_on:
      - jenkins-master
     command:
-      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://jenkins-master:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/ci-agent"
+      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://${JENKINS_SERVER}:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/ci-agent"
     restart: unless-stopped
