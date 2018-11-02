@@ -12,16 +12,18 @@ services:
       - "50000:50000"
     volumes:
       - ./data/jenkins-master:/var/jenkins_home
-     # - ./config/secrets:/var/jenkins_secrets
+      # - ./config/secrets:/var/jenkins_secrets
     environment:
       - LOCAL_ADMIN=admin
       - LOCAL_PASSWORD
       - JENKINS_SECRETS
       - JENKINS_FRONTEND_URL
       - GIHUB_ORG_WEBHOOK_URL
-      - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
       - JENKINS_MASTER_EXECUTORS=0
       - JENKINS_AGENT_EXECUTORS=2
+      - http_proxy
+      - https_proxy
     restart: always
 
 
