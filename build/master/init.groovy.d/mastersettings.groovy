@@ -9,5 +9,13 @@ def frontendUrl = System.getenv('JENKINS_FRONTEND_URL') ?: 'http://localhost:808
 println "Updating Jenkins URL to: ${frontendUrl}"
 location.url = frontendUrl
 
+if(System.getenv('http_proxy')) {
+  println "--> Found http_proxy environment variable, updating master proxy information"
+  def proxyUrl = new URL(System.getenv('http_proxy'))
+
+  def pc = new hudson.ProxyConfiguration(proxyUrl.host, proxyUrl.port, '', '', 'localhost')
+  instance.proxy = pc
+  pc.save()
+}
 
 instance.save()

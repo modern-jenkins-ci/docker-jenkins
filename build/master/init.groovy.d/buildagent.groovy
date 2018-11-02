@@ -10,8 +10,6 @@ import hudson.slaves.EnvironmentVariablesNodeProperty.Entry;
 def createSlave(instance, name, label, numExecutors) {
   println "--> Creating [${name}] agent with label [${label}]"
 
-  List<Entry> agentEnv = new ArrayList<Entry>()
-  EnvironmentVariablesNodeProperty envPro = new EnvironmentVariablesNodeProperty(agentEnv)
   Slave slave = new DumbSlave(
           name, "CI Docker Agent",
           "ci-agent",
@@ -21,6 +19,20 @@ def createSlave(instance, name, label, numExecutors) {
           new JNLPLauncher(),
           new RetentionStrategy.Always(),
           new LinkedList())
+
+  List<Entry> agentEnv = new ArrayList<Entry>()
+
+  if(System.getenv('http_proxy')) {
+    println "--> Found http_proxy environment variable, adding to slave env"
+    agentEnv.add(new Entry('http_proxy', System.getenv('http_proxy')))
+  }
+
+  if(System.getenv('https_proxy')) {
+    println "--> Found https_proxy environment variable, adding to slave env"
+    agentEnv.add(new Entry('https_proxy', System.getenv('https_proxy')))
+  }
+
+  EnvironmentVariablesNodeProperty envPro = new EnvironmentVariablesNodeProperty(agentEnv)
   slave.getNodeProperties().add(envPro)
   instance.addNode(slave)
 
