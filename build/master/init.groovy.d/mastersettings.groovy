@@ -18,4 +18,10 @@ if(System.getenv('http_proxy')) {
   pc.save()
 }
 
+// Force the setup wizard not to run or other way -Djenkins.install.runSetupWizard=false
+// if (!instance.installState.isSetupComplete()) {
+//   println '--> Neutering SetupWizard'
+//   InstallState.INITIAL_SETUP_COMPLETED.initializeState()
+// }
+
 instance.save()
