@@ -22,9 +22,9 @@ if [ $LOAD_LOCAL_SECRETS == "true" ]; then
   fi
 fi
 
-if [ ! -d data/jenkins-slave ]; then
-  mkdir -p data/jenkins-slave
+if [ ! -d data/jenkins-agent ]; then
+  mkdir -p data/jenkins-agent
 fi
 
-docker-compose up -d jenkins-slave
-docker-compose logs -f jenkins-slave
+docker-compose up -d jenkins-agent
+docker-compose logs -f jenkins-agent

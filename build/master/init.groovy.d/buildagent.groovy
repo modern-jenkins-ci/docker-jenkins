@@ -45,6 +45,6 @@ def instance = Jenkins.getInstance()
 
 instance.setNumExecutors(masterExecs)
 
-createSlave(instance, "docker-slave", "docker", numExecs)
+createSlave(instance, "docker-agent", "docker", numExecs)
 
 instance.save()

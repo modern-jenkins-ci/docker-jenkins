@@ -1,4 +1,4 @@
-# Used to create a jenkins slave agent with embedded software
+# Used to create a jenkins build agent with embedded software
 FROM jenkins/slave:alpine
 
 COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/docker

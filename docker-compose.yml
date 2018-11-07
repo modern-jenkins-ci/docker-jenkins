@@ -27,15 +27,15 @@ services:
     restart: always
 
 
-  jenkins-slave:
+  jenkins-agent:
     build:
-      context: build/slave
+      context: build/agent
     user: root #katacoda
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-     - ./data/jenkins-slave:/home/jenkins/ci-agent
+     - ./data/jenkins-agent:/home/jenkins/ci-agent
     # depends_on: #commented out for katacoda
-    # - jenkins-master
+    #  - jenkins-master
     command:
-      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://${JENKINS_SERVER}:8080/computer/docker-slave/slave-agent.jnlp -secret "$SLAVE_SECRET" -workDir "/home/jenkins/ci-agent"
+      java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://${JENKINS_SERVER}:8080/computer/docker-agent/slave-agent.jnlp -secret "$JOIN_SECRET" -workDir "/home/jenkins/ci-agent"
     restart: unless-stopped
