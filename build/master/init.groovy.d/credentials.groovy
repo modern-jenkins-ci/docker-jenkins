@@ -55,7 +55,7 @@ if(secretsRoot) {
     list << file
   }
 
-  println "Fount the following secret file(s): ${list}"
+  println "Found the following secret file(s): ${list}"
 
   list.each { secretFile ->
     println "--> Importing secrets from ${secretFile}"

@@ -5,23 +5,23 @@ services:
   jenkins-master:
     build:
       context: build/master
-      dockerfile: Dockerfile.secrets
+      dockerfile: Dockerfile
     user: root #katacoda
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - ./data/jenkins-master:/var/jenkins_home
-      # - ./config/secrets:/var/jenkins_secrets
+      - ./config/secrets:/var/jenkins_secrets
     environment:
-      - LOCAL_ADMIN=admin
+      - JAVA_OPTS
+      - LOCAL_ADMIN
       - LOCAL_PASSWORD
       - JENKINS_SECRETS
       - JENKINS_FRONTEND_URL
       - GIHUB_ORG_WEBHOOK_URL
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
-      - JENKINS_MASTER_EXECUTORS=0
-      - JENKINS_AGENT_EXECUTORS=2
+      - JENKINS_MASTER_EXECUTORS
+      - JENKINS_AGENT_EXECUTORS
       - http_proxy
       - https_proxy
     restart: always
@@ -32,10 +32,8 @@ services:
       context: build/agent
     user: root #katacoda
     volumes:
-     - /var/run/docker.sock:/var/run/docker.sock
+     - /var/run/docker.sock:/var/run/docker.sock # this is needed to spawn other containers
      - ./data/jenkins-agent:/home/jenkins/ci-agent
-    # depends_on: #commented out for katacoda
-    #  - jenkins-master
     command:
       java -jar /usr/share/jenkins/slave.jar -jnlpUrl http://${JENKINS_SERVER}:8080/computer/docker-agent/slave-agent.jnlp -secret "$JOIN_SECRET" -workDir "/home/jenkins/ci-agent"
     restart: unless-stopped

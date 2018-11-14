@@ -81,32 +81,40 @@ def configureGitHubOrg(instance, githubOrg, folderDisplayName, orgCredential) {
   println "--> Successfully created [${githubOrg}] organization folder"
 
   // schedule a scan
-  // println '--> Scheduling GitHub organization scan in 30 seconds'
-  // Thread.start {
-  //   sleep 30000 // 30 seconds
-  //   println '--> Running GitHub organization scan'
-  //   folder.scheduleBuild()
-  // }
+  println '--> Scheduling GitHub organization scan in 30 seconds'
+  Thread.start {
+    sleep 30000 // 30 seconds
+    println '--> Running GitHub organization scan'
+    folder.scheduleBuild()
+  }
 }
+
+def apiUrl           = System.getenv('GITHUB_SETUP_API_URL')
+def credentialId     = System.getenv('GITHUB_SETUP_CREDENTIAL_ID')
+def hookCredentialId = System.getenv('GITHUB_SETUP_WEBHOOK_CREDENTIAL_ID')
+def orgName          = System.getenv('GITHUB_SETUP_ORG_NAME')
+def orgDisplayName   = System.getenv('GITHUB_SETUP_ORG_DISPLAY_NAME') ?: orgName.replaceAll(' ', '-')
 
 def instance = Jenkins.getInstance()
 
 // Verify that the credentials were actually created
 def creds = CredentialsProvider.lookupCredentials(StandardUsernamePasswordCredentials, instance)
-def cred = creds.findResult { it.id == 'swpc-11-2018-pat' ? it : null }
+def cred = creds.findResult { it.id == credentialId ? it : null }
 
 def textCreds = CredentialsProvider.lookupCredentials(StringCredentialsImpl, instance)
-def hookCred = textCreds.findResult { it.id == 'swpc-11-2018-pat-text' ? it : null }
+def hookCred = textCreds.findResult { it.id == hookCredentialId ? it : null }
 
 if(hookCred) {
-  def webHookUrl = System.getenv('GIHUB_ORG_WEBHOOK_URL') ?:"${System.getenv('JENKINS_FRONTEND_URL')}github-webhook/"
-  configureGitHub(instance, 'GitHub', 'https://api.github.com', hookCred.id, true, webHookUrl, hookCred.id)
+  def webHookUrl = System.getenv('GIHUB_SETUP_ORG_WEBHOOK_URL') ?:"${System.getenv('JENKINS_FRONTEND_URL')}github-webhook/"
+  configureGitHub(instance, 'GitHub', apiUrl, hookCred.id, true, webHookUrl, hookCred.id)
 } else {
   println "Could not find webhook shared secret. Could not configure GitHub"
 }
 
 if(cred) {
-  configureGitHubOrg(instance, 'modern-jenkins-ci', 'Modern-Jenkins', cred)
+  if(orgName) {
+    configureGitHubOrg(instance, orgName, orgDisplayName, cred)
+  }
 } else {
   println '[ERROR] Unable to create GitHub Org due to missing credentials'
 }
