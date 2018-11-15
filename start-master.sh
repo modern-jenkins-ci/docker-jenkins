@@ -7,18 +7,20 @@ fi
 LOAD_LOCAL_SECRETS=${LOAD_LOCAL_SECRETS:-true}
 LOCAL_SECRETS=./config/secrets
 
-if [ $LOAD_LOCAL_SECRETS == "true" ]; then
-  if [ ! -d $LOCAL_SECRETS ]; then
-    mkdir -p $LOCAL_SECRETS
-  fi
+if [ ! -z $SECRETS_SEED_URL ]; then
+  if [ $LOAD_LOCAL_SECRETS == "true" ]; then
+    if [ ! -d $LOCAL_SECRETS ]; then
+      mkdir -p $LOCAL_SECRETS
+    fi
 
-  curl -sSL $SECRETS_SEED_URL -o $LOCAL_SECRETS/local_secrets
+    curl -sSL $SECRETS_SEED_URL -o $LOCAL_SECRETS/local_secrets
 
-  if [ -e $LOCAL_SECRETS/local_secrets ]; then
-    echo "Local Secrets exist...starting jenkins"
-  else
-    echo "Could not find local secrets, exiting..."
-    exit 1
+    if [ -e $LOCAL_SECRETS/local_secrets ]; then
+      echo "Local Secrets exist...starting jenkins"
+    else
+      echo "Could not find local secrets, exiting..."
+      exit 1
+    fi
   fi
 fi
 
