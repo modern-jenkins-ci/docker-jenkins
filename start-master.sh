@@ -7,8 +7,8 @@ fi
 LOAD_LOCAL_SECRETS=${LOAD_LOCAL_SECRETS:-true}
 LOCAL_SECRETS=./config/secrets
 
-if [ ! -z $SECRETS_SEED_URL ]; then
-  if [ $LOAD_LOCAL_SECRETS == "true" ]; then
+if [ -n "$SECRETS_SEED_URL" ]; then
+  if [ "$LOAD_LOCAL_SECRETS" = "true" ]; then
     if [ ! -d $LOCAL_SECRETS ]; then
       mkdir -p $LOCAL_SECRETS
     fi
