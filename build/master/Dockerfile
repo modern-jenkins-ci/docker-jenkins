@@ -13,6 +13,7 @@ RUN chown -R jenkins:jenkins /usr/share/jenkins/ref
 
 USER jenkins
 
-#ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+
 # this comes from base image jenkins/jenkins:lts
 ENTRYPOINT /usr/local/bin/jenkins.sh
