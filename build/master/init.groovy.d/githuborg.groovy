@@ -103,11 +103,13 @@ def instance = Jenkins.getInstance()
 
 // Verify that the credentials were actually created
 def creds = CredentialsProvider.lookupCredentials(StandardUsernamePasswordCredentials, instance)
+
 def cred = creds.findResult { it.id == credentialId ? it : null }
 
 def textCreds = CredentialsProvider.lookupCredentials(StringCredentialsImpl, instance)
 def hookCred = textCreds.findResult { it.id == hookCredentialId ? it : null }
 
+println "--> Configuring GitHub Server [${apiUrl}] with credentialId [${hookCredentialId}]"
 if(hookCred) {
   def webHookUrl = System.getenv('GIHUB_SETUP_ORG_WEBHOOK_URL') ?:"${System.getenv('JENKINS_FRONTEND_URL')}github-webhook/"
   configureGitHub(instance, 'GitHub', apiUrl, hookCred.id, true, webHookUrl, hookCred.id)
@@ -115,6 +117,7 @@ if(hookCred) {
   println "Could not find webhook shared secret. Could not configure GitHub"
 }
 
+println "--> Configuring GitHub Org [${orgName}:${orgDisplayName}] with credentialId [${credentialId}]"
 if(cred) {
   if(orgName) {
     configureGitHubOrg(instance, orgName, orgDisplayName, cred)
