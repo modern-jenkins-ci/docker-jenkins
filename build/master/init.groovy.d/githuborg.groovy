@@ -93,7 +93,11 @@ def apiUrl           = System.getenv('GITHUB_SETUP_API_URL')
 def credentialId     = System.getenv('GITHUB_SETUP_CREDENTIAL_ID')
 def hookCredentialId = System.getenv('GITHUB_SETUP_WEBHOOK_CREDENTIAL_ID')
 def orgName          = System.getenv('GITHUB_SETUP_ORG_NAME')
-def orgDisplayName   = System.getenv('GITHUB_SETUP_ORG_DISPLAY_NAME') ?: orgName.replaceAll(' ', '-')
+def orgDisplayName   = System.getenv('GITHUB_SETUP_ORG_DISPLAY_NAME')
+
+if(!orgDisplayName && orgName) {
+  orgDisplayName = orgName.replaceAll(' ', '-')
+}
 
 def instance = Jenkins.getInstance()
 

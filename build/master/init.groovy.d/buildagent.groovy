@@ -39,7 +39,7 @@ def createSlave(instance, name, label, numExecutors) {
   println "Created ${name} agent"
 }
 
-def masterExecs = System.getenv("JENKINS_MASTER_EXECUTORS").toInteger() ?: 0
+def masterExecs = System.getenv("JENKINS_MASTER_EXECUTORS") ? System.getenv("JENKINS_MASTER_EXECUTORS").toInteger() : 0
 def numExecs = System.getenv('JENKINS_AGENT_EXECUTORS').toString() ?: '2'
 def instance = Jenkins.getInstance()
 
